@@ -4,7 +4,7 @@ const asyncWrapper = (ctrl) => {
       await ctrl(req, res, next);
     } catch (error) {
       error.status = 500;
-      next(error);
+      next();
     }
   };
 };
