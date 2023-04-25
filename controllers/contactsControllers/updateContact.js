@@ -1,9 +1,10 @@
 const { changeContact } = require("../../services/contactsServices");
 
-const updateContact = async (req, res, __) => {
+const updateContact = async (req, res) => {
   const { contactId } = req.params;
   const body = req.body;
-  const updatedContact = await changeContact(contactId, body);
+  const { _id: owner } = req.user;
+  const updatedContact = await changeContact({ _id: contactId, owner }, body);
   if (!updatedContact) {
     return res.status(404).json({ message: "Not found" });
   }
