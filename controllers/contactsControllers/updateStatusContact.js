@@ -1,4 +1,4 @@
-const { toggleFavoriteContact } = require("../services/contactsServices");
+const { toggleFavoriteContact } = require("../../services/contactsServices");
 
 const updateStatusContact = async (req, res, __) => {
   const { contactId } = req.params;

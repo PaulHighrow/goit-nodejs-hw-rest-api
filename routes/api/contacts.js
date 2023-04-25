@@ -1,32 +1,39 @@
 const express = require("express");
 
-const listContacts = require("../../controllers/listContacts");
-const getById = require("../../controllers/getById");
-const addContact = require("../../controllers/addContact");
-const removeContact = require("../../controllers/removeContact");
-const updateContact = require("../../controllers/updateContact");
-const updateStatusContact = require("../../controllers/updateStatusContact");
+const listContacts = require("../../controllers/contactsControllers/listContacts");
+const getById = require("../../controllers/contactsControllers/getById");
+const addContact = require("../../controllers/contactsControllers/addContact");
+const removeContact = require("../../controllers/contactsControllers/removeContact");
+const updateContact = require("../../controllers/contactsControllers/updateContact");
+const updateStatusContact = require("../../controllers/contactsControllers/updateStatusContact");
 
 const validateData = require("../../middlewares/addValidator");
 const validateUpdateData = require("../../middlewares/updateValidator");
 const validateStatusData = require("../../middlewares/updateStatusValidator");
+const authenticate = require("../../middlewares/authenticate");
 
 const asyncWrapper = require("../../helpers/asyncWrapper");
 
 const router = express.Router();
 
-router.get("/", asyncWrapper(listContacts));
+router.get("/", authenticate, asyncWrapper(listContacts));
 
-router.get("/:contactId", asyncWrapper(getById));
+router.get("/:contactId", authenticate, asyncWrapper(getById));
 
-router.post("/", validateData, asyncWrapper(addContact));
+router.post("/", authenticate, validateData, asyncWrapper(addContact));
 
-router.delete("/:contactId", asyncWrapper(removeContact));
+router.delete("/:contactId", authenticate, asyncWrapper(removeContact));
 
-router.put("/:contactId", validateUpdateData, asyncWrapper(updateContact));
+router.put(
+  "/:contactId",
+  authenticate,
+  validateUpdateData,
+  asyncWrapper(updateContact)
+);
 
 router.patch(
   "/:contactId/favorite",
+  authenticate,
   validateStatusData,
   asyncWrapper(updateStatusContact)
 );
