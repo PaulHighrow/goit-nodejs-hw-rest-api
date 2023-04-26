@@ -1,8 +1,9 @@
-const { deleteContact } = require("../services/contactsServices");
+const { deleteContact } = require("../../services/contactsServices");
 
-const removeContact = async (req, res, next) => {
+const removeContact = async (req, res) => {
   const { contactId } = req.params;
-  const contactToRemove = await deleteContact(contactId);
+  const { _id: owner } = req.user;
+  const contactToRemove = await deleteContact({ _id: contactId, owner });
   if (!contactToRemove) {
     return res.status(404).json({ message: "Not found" });
   }
