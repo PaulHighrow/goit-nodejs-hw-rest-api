@@ -20,10 +20,15 @@ const updateSubscription = async (id, update) => {
   return await User.findByIdAndUpdate(id, update, { new: true });
 };
 
+const updateAvatar = async (id, avatar) => {
+  return await User.findByIdAndUpdate(id, avatar, { new: true });
+};
+
 module.exports = {
   findUser,
   createUser,
   loginUser,
   logoutUser,
   updateSubscription,
+  updateAvatar,
 };
