@@ -25,7 +25,7 @@ router.get("/current", authenticate, asyncWrapper(getCurrentUser));
 router.patch("/", authenticate, asyncWrapper(updateUserSubscription));
 
 router.patch(
-  "/avatar",
+  "/avatars",
   authenticate,
   uploadAvatar,
   asyncWrapper(updateUserAvatar)
