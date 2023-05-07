@@ -2,6 +2,7 @@ const express = require("express");
 const validateUserData = require("../../middlewares/userValidator");
 const authenticate = require("../../middlewares/authenticate");
 const uploadAvatar = require("../../middlewares/uploadAvatar");
+const validateEmail = require("../../middlewares/emailValidator");
 
 const asyncWrapper = require("../../helpers/asyncWrapper");
 
@@ -11,10 +12,16 @@ const logout = require("../../controllers/userControllers/logout");
 const getCurrentUser = require("../../controllers/userControllers/getCurrentUser");
 const updateUserSubscription = require("../../controllers/userControllers/updateUserSubscription");
 const updateUserAvatar = require("../../controllers/userControllers/updateUserAvatar");
+const verifyUser = require("../../controllers/userControllers/verifyUser");
+const resendVerificationEmail = require("../../controllers/userControllers/resendVerificationEmail");
 
 const router = express.Router();
 
 router.post("/register", validateUserData, asyncWrapper(register));
+
+router.get("/verify/:verificationToken", asyncWrapper(verifyUser));
+
+router.post("/verify", validateEmail, asyncWrapper(resendVerificationEmail));
 
 router.post("/login", validateUserData, asyncWrapper(login));
 
